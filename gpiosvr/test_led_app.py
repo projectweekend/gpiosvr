@@ -3,7 +3,7 @@ from unittest import mock
 from falcon import testing
 import pytest
 
-from . utils import create_app
+from .led import app
 
 
 PIN_CONFIG = [('red', 5), ('blue', 13)]
@@ -18,8 +18,8 @@ def mock_led_factory(pin_num):
 
 @pytest.fixture()
 def client():
-    app = create_app(pin_config=PIN_CONFIG, led_factory=mock_led_factory)
-    return testing.TestClient(app)
+    a = app.create(pin_config=PIN_CONFIG, led_factory=mock_led_factory)
+    return testing.TestClient(a)
 
 
 def test_get_led_exists(client):

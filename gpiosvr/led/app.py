@@ -3,7 +3,7 @@ import falcon
 from .resources import Control, Detail
 
 
-def create_app(pin_config, led_factory):
+def create(pin_config, led_factory):
     """
     This returns a Falcon application that is ready to use with Gunicorn.
     `pin_config`: An iterable of pin number/route label pairs
