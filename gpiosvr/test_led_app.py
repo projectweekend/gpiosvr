@@ -27,3 +27,8 @@ def test_get_led_exists(client):
         result = client.simulate_get('/{0}'.format(label))
         assert result.json['pin'] == pin
         assert result.json['is_lit'] is False
+
+
+def test_get_led_not_exists(client):
+    result = client.simulate_get('/green')
+    assert result.status_code == 404

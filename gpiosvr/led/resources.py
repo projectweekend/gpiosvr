@@ -1,5 +1,7 @@
 import json
 
+import falcon
+
 
 class LED:
 
@@ -9,8 +11,7 @@ class LED:
     def led(self, label):
         led = self._leds.get(label)
         if led is None:
-            message = 'label does not exist: {0}'.format(label)
-            raise falcon.HTTPNotFound(message)
+            raise falcon.HTTPNotFound()
         return led
 
     @staticmethod
@@ -34,8 +35,7 @@ class Control(LED):
     def on_post(self, req, res, label, action):
         led = self.led(label)
         if action not in self.allowed_actions:
-            message = 'action does not exist: {0}'.format(label)
-            raise falcon.HTTPNotFound(message)
+            raise falcon.HTTPNotFound()
 
         getattr(led, action)()
         res.body = self._led_to_json(led)
