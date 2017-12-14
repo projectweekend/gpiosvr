@@ -30,6 +30,12 @@ def client():
     return testing.TestClient(a)
 
 
+def test_get_led_routes_list(client):
+    result = client.simulate_get('/')
+    assert result.status_code == 200
+    assert len(result.json) == len(PIN_CONFIG)
+
+
 def test_get_led_exists(client):
     for label, pin in PIN_CONFIG:
         result = client.simulate_get('/{0}'.format(label))

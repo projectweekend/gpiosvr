@@ -1,6 +1,6 @@
 import falcon
 
-from .resources import Control, Detail
+from .resources import Control, Detail, List
 
 
 def create(pin_config, led_factory):
@@ -13,6 +13,7 @@ def create(pin_config, led_factory):
     leds = {label: led_factory(pin) for label, pin in pin_config}
 
     app = falcon.API()
+    app.add_route('/', List(leds=leds))
     app.add_route('/{label}', Detail(leds=leds))
     app.add_route('/{label}/{action}', Control(leds=leds))
 

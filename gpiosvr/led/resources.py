@@ -14,18 +14,31 @@ class LED:
             raise falcon.HTTPNotFound()
         return led
 
-    @staticmethod
-    def _led_to_json(led):
-        return json.dumps({
+    def _led_to_dict(self, led):
+        return {
             'pin': led.pin,
             'is_lit': led.is_lit
-        })
+        }
+
+    def _led_to_json(self, led):
+        return json.dumps(self._led_to_dict(led))
 
 
 class Detail(LED):
 
     def on_get(self, req, res, label):
         res.body = self._led_to_json(self.led(label))
+
+
+class List(LED):
+
+    def on_get(self, req, res):
+        result = []
+        for label in self._leds:
+            result.append({
+                'route': '/{0}'.format(label)
+            })
+        res.body = json.dumps(result)
 
 
 class Control(LED):
