@@ -36,3 +36,10 @@ $ source venv/bin/activate
 ```bash
 (venv) $ pytest --cov=gpiosvr --cov-report=html
 ```
+
+
+# Publish to pypi
+```bash
+$ python setup.py sdist
+$ twine upload dist/*
+```
