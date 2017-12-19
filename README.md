@@ -14,7 +14,7 @@ from gpiozero import LED
 
 pin_config = (('red', 5), ('yellow', 6), ('green', 13), )
 
-application = led.create_server(pin_config=pin_config,led_factory=LED)  
+application = led.create_server(pin_config=pin_config, led_factory=LED)  
 ```
 
 Start the server with Gunicorn, using your desired options.
