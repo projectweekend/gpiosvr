@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 setup(
@@ -9,8 +9,7 @@ setup(
     author_email='brian@projectweekend.net',
     description='RESTful interfaces for Raspberry Pi GPIO',
     url='https://github.com/projectweekend/gpiosvr',
-    packages=['gpiosvr'],
-    py_modules=['gpiosvr'],
+    packages=find_packages(),
     python_requires='>=3',
     install_requires=[
         'falcon',
