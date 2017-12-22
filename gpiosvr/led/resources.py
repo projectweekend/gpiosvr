@@ -8,12 +8,6 @@ class LED:
     def __init__(self, leds):
         self._leds = leds
 
-    def led(self, label):
-        led = self._leds.get(label)
-        if led is None:
-            raise falcon.HTTPNotFound()
-        return led
-
     def _led_to_dict(self, led):
         return {
             'pin': led.pin,
@@ -27,7 +21,10 @@ class LED:
 class Detail(LED):
 
     def on_get(self, req, res, label):
-        res.body = self._led_to_json(self.led(label))
+        led = self._leds.get(label)
+        if led is None:
+            raise falcon.HTTPNotFound()
+        res.body = self._led_to_json(led)
 
 
 class List(LED):
@@ -46,8 +43,8 @@ class Control(LED):
     allowed_actions = ('on', 'off', 'toggle')
 
     def on_post(self, req, res, label, action):
-        led = self.led(label)
-        if action not in self.allowed_actions:
+        led = self._leds.get(label)
+        if led is None or action not in self.allowed_actions:
             raise falcon.HTTPNotFound()
 
         getattr(led, action)()
