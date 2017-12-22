@@ -10,7 +10,7 @@ class LED:
 
     def _led_to_dict(self, led):
         return {
-            'pin': led.pin,
+            'pin': led.pin.number,
             'is_lit': led.is_lit
         }
 
